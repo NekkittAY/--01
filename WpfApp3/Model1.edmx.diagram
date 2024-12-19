@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6371e9bd9ca347f28e40a4cafa92e747" Name="Diagram1">
+        <EntityTypeShape EntityType="RepairRequestsDBModel.Equipment" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RepairRequestsDBModel.Feedback" Width="1.5" PointX="8.25" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="RepairRequestsDBModel.Repairs" Width="1.5" PointX="3" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RepairRequestsDBModel.Requests" Width="1.5" PointX="6" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RepairRequestsDBModel.Users" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
+        <AssociationConnector Association="RepairRequestsDBModel.FK__Requests__Equipm__3B75D760" ManuallyRouted="false" />
+        <AssociationConnector Association="RepairRequestsDBModel.FK__Feedback__Reques__4316F928" ManuallyRouted="false" />
+        <AssociationConnector Association="RepairRequestsDBModel.FK__Repairs__Executo__403A8C7D" ManuallyRouted="false" />
+        <AssociationConnector Association="RepairRequestsDBModel.FK__Repairs__Request__3F466844" ManuallyRouted="false" />
+        <AssociationConnector Association="RepairRequestsDBModel.FK__Requests__Client__3C69FB99" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

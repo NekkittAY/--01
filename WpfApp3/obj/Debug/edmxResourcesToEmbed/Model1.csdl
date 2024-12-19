@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RepairRequestsDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Equipment">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="SerialNumber" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Requests" Relationship="Self.FK__Requests__Equipm__3B75D760" FromRole="Equipment" ToRole="Requests" />
+  </EntityType>
+  <EntityType Name="Feedback">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RequestID" Type="Int32" Nullable="false" />
+    <Property Name="Rating" Type="Int32" Nullable="false" />
+    <Property Name="FeedbackText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Requests" Relationship="Self.FK__Feedback__Reques__4316F928" FromRole="Feedback" ToRole="Requests" />
+  </EntityType>
+  <EntityType Name="Repairs">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RequestID" Type="Int32" Nullable="false" />
+    <Property Name="ExecutorID" Type="Int32" Nullable="false" />
+    <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="EndDate" Type="DateTime" Precision="3" />
+    <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Users" Relationship="Self.FK__Repairs__Executo__403A8C7D" FromRole="Repairs" ToRole="Users" />
+    <NavigationProperty Name="Requests" Relationship="Self.FK__Repairs__Request__3F466844" FromRole="Repairs" ToRole="Requests" />
+  </EntityType>
+  <EntityType Name="Requests">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RequestNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="DateAdded" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="EquipmentID" Type="Int32" Nullable="false" />
+    <Property Name="FaultType" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ClientID" Type="Int32" Nullable="false" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Deadline" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Equipment" Relationship="Self.FK__Requests__Equipm__3B75D760" FromRole="Requests" ToRole="Equipment" />
+    <NavigationProperty Name="Feedback" Relationship="Self.FK__Feedback__Reques__4316F928" FromRole="Requests" ToRole="Feedback" />
+    <NavigationProperty Name="Repairs" Relationship="Self.FK__Repairs__Request__3F466844" FromRole="Requests" ToRole="Repairs" />
+    <NavigationProperty Name="Users" Relationship="Self.FK__Requests__Client__3C69FB99" FromRole="Requests" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FullName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Login" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Repairs" Relationship="Self.FK__Repairs__Executo__403A8C7D" FromRole="Users" ToRole="Repairs" />
+    <NavigationProperty Name="Requests" Relationship="Self.FK__Requests__Client__3C69FB99" FromRole="Users" ToRole="Requests" />
+  </EntityType>
+  <Association Name="FK__Requests__Equipm__3B75D760">
+    <End Role="Equipment" Type="Self.Equipment" Multiplicity="1" />
+    <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Equipment">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Requests">
+        <PropertyRef Name="EquipmentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Feedback__Reques__4316F928">
+    <End Role="Requests" Type="Self.Requests" Multiplicity="1" />
+    <End Role="Feedback" Type="Self.Feedback" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Requests">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Feedback">
+        <PropertyRef Name="RequestID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Repairs__Executo__403A8C7D">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Repairs" Type="Self.Repairs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Repairs">
+        <PropertyRef Name="ExecutorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Repairs__Request__3F466844">
+    <End Role="Requests" Type="Self.Requests" Multiplicity="1" />
+    <End Role="Repairs" Type="Self.Repairs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Requests">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Repairs">
+        <PropertyRef Name="RequestID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Requests__Client__3C69FB99">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="Requests" Type="Self.Requests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Requests">
+        <PropertyRef Name="ClientID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="RepairRequestsDBEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Equipment" EntityType="Self.Equipment" />
+    <EntitySet Name="Feedback" EntityType="Self.Feedback" />
+    <EntitySet Name="Repairs" EntityType="Self.Repairs" />
+    <EntitySet Name="Requests" EntityType="Self.Requests" />
+    <EntitySet Name="Users" EntityType="Self.Users" />
+    <AssociationSet Name="FK__Requests__Equipm__3B75D760" Association="Self.FK__Requests__Equipm__3B75D760">
+      <End Role="Equipment" EntitySet="Equipment" />
+      <End Role="Requests" EntitySet="Requests" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Feedback__Reques__4316F928" Association="Self.FK__Feedback__Reques__4316F928">
+      <End Role="Requests" EntitySet="Requests" />
+      <End Role="Feedback" EntitySet="Feedback" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Repairs__Executo__403A8C7D" Association="Self.FK__Repairs__Executo__403A8C7D">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Repairs" EntitySet="Repairs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Repairs__Request__3F466844" Association="Self.FK__Repairs__Request__3F466844">
+      <End Role="Requests" EntitySet="Requests" />
+      <End Role="Repairs" EntitySet="Repairs" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Requests__Client__3C69FB99" Association="Self.FK__Requests__Client__3C69FB99">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Requests" EntitySet="Requests" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

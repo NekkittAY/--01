@@ -1,0 +1,39 @@
+﻿<Page x:Class="WpfApp3.pages.ManagerPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WpfApp3.pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ManagerPage">
+
+    <Grid Background="#D2F1F0" Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок -->
+        <TextBlock Text="Панель менеджера" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,10" />
+
+        <!-- Таблица заявок -->
+        <DataGrid x:Name="DataGridRequests" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" Margin="0,10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Номер" Binding="{Binding RequestNumber}" Width="100" />
+                <DataGridTextColumn Header="Дата" Binding="{Binding DateAdded}" Width="150" />
+                <DataGridTextColumn Header="Оборудование" Binding="{Binding Equipment.Name}" Width="150" />
+                <DataGridTextColumn Header="Срок выполнения" Binding="{Binding Deadline}" Width="150" />
+                <DataGridTextColumn Header="Статус" Binding="{Binding Status}" Width="100" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Кнопки управления -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Назначить специалиста" Click="ButtonAssignSpecialist_Click" Margin="5" />
+            <Button Content="Продлить срок" Click="ButtonExtendDeadline_Click" Margin="5" />
+            <Button Content="Генерировать QR-код" Click="ButtonGenerateQR_Click" Margin="5" />
+        </StackPanel>
+    </Grid>
+</Page>
